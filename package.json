@@ -1,0 +1,17 @@
+{
+  "name": "social-match",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@fastify/static": "^7.0.4",
+    "datadid-sdk-js": "^1.0.7",
+    "dotenv": "^16.6.0",
+    "fastify": "^4.29.1",
+    "mysql2": "^3.14.1"
+  }
+}

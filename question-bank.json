@@ -1,0 +1,515 @@
+{
+  "themes": [
+    { "key": "soulmate", "label": "Soulmate Sync" },
+    { "key": "food", "label": "Food Buddy" },
+    { "key": "travel", "label": "Travel Buddy" }
+  ],
+  "questionBank": {
+    "soulmate": [
+      {
+        "id": "q1",
+        "question": "How do you prefer to spend a weekend?",
+        "options": [
+          "Go out: shop, eat, take photos",
+          "Stay in: rest, binge shows, play games",
+          "No plan—decide by mood",
+          "Plan a full itinerary in advance"
+        ],
+        "dimension": "life",
+        "type": "complement",
+        "scores": [3, 0, 2, 1]
+      },
+      {
+        "id": "q2",
+        "question": "A friend cancels last minute. Your first reaction is…",
+        "options": [
+          "A bit annoyed, but I keep it in",
+          "No big deal—more me time",
+          "I want the reason before I feel anything",
+          "I say I’m upset, directly"
+        ],
+        "dimension": "emotion",
+        "type": "conflict",
+        "scores": [2, 0, 1, 3]
+      },
+      {
+        "id": "q3",
+        "question": "What kind of texting style do you like?",
+        "options": [
+          "High-frequency, share everything",
+          "Low-frequency but meaningful",
+          "Straight to the point, no small talk",
+          "Depends who it is—close friends get more"
+        ],
+        "dimension": "emotion",
+        "type": "similarity",
+        "scores": [3, 1, 0, 2]
+      },
+      {
+        "id": "q4",
+        "question": "When going out to eat, you usually…",
+        "options": [
+          "Pick places and do the research",
+          "Follow others, easy",
+          "Choose randomly nearby",
+          "Check rating, price, and distance first"
+        ],
+        "dimension": "life",
+        "type": "complement",
+        "scores": [3, 0, 1, 2]
+      },
+      {
+        "id": "q5",
+        "question": "How late can someone be before you mind?",
+        "options": ["Within 5 minutes", "Within 15 minutes", "Up to 30 minutes is fine", "Depends if they warned me"],
+        "dimension": "life",
+        "type": "conflict",
+        "scores": [3, 2, 0, 1]
+      },
+      {
+        "id": "q6",
+        "question": "In a relationship, what matters most to you?",
+        "options": ["Feeling accompanied", "Healthy boundaries", "Emotional support", "Growing together"],
+        "dimension": "emotion",
+        "type": "similarity",
+        "scores": [2, 0, 3, 1]
+      },
+      {
+        "id": "q7",
+        "question": "Your spending style is closer to…",
+        "options": ["If I like it, I buy it—joy first", "I hesitate forever", "I spend only on what matters", "Budget first, then decide"],
+        "dimension": "life",
+        "type": "conflict",
+        "scores": [3, 1, 0, 2]
+      },
+      {
+        "id": "q8",
+        "question": "When you disagree, you tend to…",
+        "options": ["Talk it out immediately", "Cool down first, then talk", "Avoid conflict if possible", "Use humor to soften the mood"],
+        "dimension": "emotion",
+        "type": "complement",
+        "scores": [3, 1, 0, 2]
+      },
+      {
+        "id": "q9",
+        "question": "Your favorite travel style is…",
+        "options": ["Speed-run sightseeing", "Slow and relaxed", "Food comes first", "Photos and experiences first"],
+        "dimension": "fun",
+        "type": "similarity",
+        "scores": [3, 0, 1, 2]
+      },
+      {
+        "id": "q10",
+        "question": "An ideal friendship feels like…",
+        "options": ["We meet often", "We rarely talk but it’s solid", "We can roast each other safely", "We do lots of things together"],
+        "dimension": "emotion",
+        "type": "similarity",
+        "scores": [3, 1, 0, 2]
+      },
+      {
+        "id": "q11",
+        "question": "In a group, you’re usually…",
+        "options": ["The one who sets the vibe", "Quietly observing", "The punchline / meme responder", "Switching modes depending on the room"],
+        "dimension": "fun",
+        "type": "complement",
+        "scores": [3, 0, 1, 2]
+      },
+      {
+        "id": "q12",
+        "question": "To finish a project together, you’re best at…",
+        "options": ["Ideas and creativity", "Making the plan", "Driving execution", "Quality check and details"],
+        "dimension": "fun",
+        "type": "complement",
+        "scores": [2, 1, 3, 0]
+      },
+      {
+        "id": "q13",
+        "question": "What’s your ideal friend contact frequency?",
+        "options": ["Daily chats and sharing", "Often, but not constantly", "Occasionally, still close", "Only show up when needed"],
+        "dimension": "emotion",
+        "type": "similarity",
+        "scores": [3, 2, 1, 0]
+      },
+      {
+        "id": "q14",
+        "question": "When a friend feels down, you usually…",
+        "options": ["Comfort them right away and stay with them", "Listen carefully and let them vent", "Help analyze what’s going on", "Give them some alone time first"],
+        "dimension": "emotion",
+        "type": "complement",
+        "scores": [3, 2, 1, 0]
+      },
+      {
+        "id": "q15",
+        "question": "What do you enjoy doing with friends most?",
+        "options": ["Eating out, shopping, taking photos", "Movies, games, staying in", "Traveling, exploring, trying new things", "Chatting, joking, sharing life"],
+        "dimension": "fun",
+        "type": "similarity",
+        "scores": [2, 0, 3, 1]
+      },
+      {
+        "id": "q16",
+        "question": "If a friend stands you up last minute again, you…",
+        "options": ["Get angry and feel disrespected", "Feel a bit sad, but can understand", "Ask the reason first", "Don’t mind—I'll do my own thing"],
+        "dimension": "emotion",
+        "type": "conflict",
+        "scores": [3, 2, 1, 0]
+      },
+      {
+        "id": "q17",
+        "question": "When a friend can’t decide, you…",
+        "options": ["Decide for them directly", "Give advice, but let them choose", "Analyze pros and cons together", "Tell them to go with the vibe"],
+        "dimension": "emotion",
+        "type": "complement",
+        "scores": [3, 2, 1, 0]
+      },
+      {
+        "id": "q18",
+        "question": "When there’s a misunderstanding, you tend to…",
+        "options": ["Clear it up immediately", "Cool down first, then talk", "Wait for them to explain", "It’s small—no need to overthink"],
+        "dimension": "emotion",
+        "type": "conflict",
+        "scores": [3, 2, 1, 0]
+      },
+      {
+        "id": "q19",
+        "question": "What kind of friend do you like most?",
+        "options": ["Stable and reliable", "Lively and fun", "Deep and thoughtful", "Easygoing and effortless"],
+        "dimension": "emotion",
+        "type": "similarity",
+        "scores": [0, 3, 2, 1]
+      },
+      {
+        "id": "q20",
+        "question": "If a friend’s spending level is different from yours, you…",
+        "options": ["Choose options comfortable for both", "Occasionally accommodate them", "Stick to my spending habits", "Depends on how close we are"],
+        "dimension": "life",
+        "type": "conflict",
+        "scores": [0, 1, 3, 2]
+      }
+    ],
+    "food": [
+      {
+        "id": "food1",
+        "question": "What kind of food do you choose most often?",
+        "options": ["Homestyle local dishes", "Hotpot / BBQ", "Western / Japanese", "Light meals"],
+        "dimension": "life",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food2",
+        "question": "How spicy can you handle?",
+        "options": ["No spice at all", "Mild", "Medium", "The spicier the better"],
+        "dimension": "life",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food3",
+        "question": "When eating out, what do you care about most?",
+        "options": ["Taste", "Ambience", "Value for money", "Photo-friendly vibes"],
+        "dimension": "life",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food4",
+        "question": "When ordering delivery, you usually…",
+        "options": ["Order from my usual place", "Check ratings and sales", "Try something new", "Follow discounts"],
+        "dimension": "life",
+        "type": "complement",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food5",
+        "question": "A viral restaurant has a 1-hour line. You…",
+        "options": ["Refuse to wait", "Can wait a bit", "If I want it, I queue", "Grab a ticket first and see"],
+        "dimension": "emotion",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food6",
+        "question": "What’s your ideal meal hangout pace?",
+        "options": ["Eat fast and go", "Eat and chat", "Slowly enjoy", "Eat, then go somewhere else"],
+        "dimension": "fun",
+        "type": "complement",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food7",
+        "question": "Your friend orders a dish you don’t like. You…",
+        "options": ["Say I won’t eat it", "Eat a little", "Whatever, I can eat anything", "Next time I’ll order what I like"],
+        "dimension": "emotion",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food8",
+        "question": "How do you prefer to order together with a food buddy?",
+        "options": ["Each order our own", "Discuss and decide together", "Let them decide", "Follow the recommended menu"],
+        "dimension": "emotion",
+        "type": "complement",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food9",
+        "question": "Your attitude toward trying new restaurants is…",
+        "options": ["I stick to safe favorites", "Occasionally try new places", "Often explore", "Actively do new-place check-ins"],
+        "dimension": "fun",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food10",
+        "question": "Your usual meal budget is…",
+        "options": ["As cheap as possible", "Normal and moderate", "Sometimes pay more", "I’ll spend a lot for great food"],
+        "dimension": "life",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food11",
+        "question": "Which meal behavior is the most unacceptable to you?",
+        "options": ["Being late", "Over-ordering and wasting", "Taking photos forever", "Being on the phone the whole time"],
+        "dimension": "emotion",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food12",
+        "question": "Your milk tea sweetness choice is…",
+        "options": ["0% sugar", "30% sugar", "50% sugar", "100% sugar"],
+        "dimension": "life",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food13",
+        "question": "If you want different cuisines, you tend to…",
+        "options": ["Each eat our own", "Find a compromise place", "Take turns compromising", "Go with whoever is hungrier"],
+        "dimension": "emotion",
+        "type": "complement",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food14",
+        "question": "Your favorite dinner gathering format is…",
+        "options": ["A two-person meal", "A small group (3–5)", "A big lively gathering", "Eating alone quietly"],
+        "dimension": "fun",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food15",
+        "question": "At a meal, you’re usually the…",
+        "options": ["Restaurant-research expert", "Main order-decider", "Vibe maker", "Quiet eater"],
+        "dimension": "fun",
+        "type": "complement",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food16",
+        "question": "If the restaurant is bad, you…",
+        "options": ["Complain instantly", "Silently endure", "Analyze what went wrong", "Treat it as a funny experience"],
+        "dimension": "emotion",
+        "type": "complement",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food17",
+        "question": "Your favorite late-night snack is…",
+        "options": ["BBQ / fried skewers", "Congee / noodles", "Dessert / milk tea", "I don’t eat late-night snacks"],
+        "dimension": "life",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food18",
+        "question": "Your attitude toward healthy eating is…",
+        "options": ["Very serious about it", "I try most days", "I eat what I want", "I don’t care at all"],
+        "dimension": "life",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food19",
+        "question": "If your food buddy wants to change the restaurant last minute, you…",
+        "options": ["Don’t love it", "Depends on the reason", "Sure, anything works", "It’s more fun this way"],
+        "dimension": "emotion",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "food20",
+        "question": "Your perfect food buddy is someone who…",
+        "options": ["Shares my taste", "Explores new places with me", "Is easygoing and not picky", "Takes good photos and chats well"],
+        "dimension": "fun",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      }
+    ],
+    "travel": [
+      {
+        "id": "travel1",
+        "question": "What travel style do you prefer?",
+        "options": ["Speed-run sightseeing", "Slow holiday mode", "Deep local experience", "Spontaneous free travel"],
+        "dimension": "fun",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel2",
+        "question": "Do you plan before leaving?",
+        "options": ["Detailed itinerary", "Rough plan", "Mood-based plan", "Almost no planning"],
+        "dimension": "life",
+        "type": "complement",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel3",
+        "question": "On a trip, what time can you wake up?",
+        "options": ["6–7 AM", "8–9 AM", "After 10 AM", "Depends on the day"],
+        "dimension": "life",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel4",
+        "question": "What matters most to you when traveling?",
+        "options": ["Landmarks", "Food", "Rest and relaxation", "Great photos"],
+        "dimension": "fun",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel5",
+        "question": "If your companion wants to change the plan last minute, you…",
+        "options": ["Hate it", "Adjust if needed", "Flexible is fine", "I prefer random anyway"],
+        "dimension": "emotion",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel6",
+        "question": "How much walking can you accept in a day?",
+        "options": ["Under 5k steps", "10k–30k steps", "50k steps is fine", "Anything if it’s worth it"],
+        "dimension": "life",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel7",
+        "question": "When choosing accommodation, you care most about…",
+        "options": ["Low price", "Convenient location", "Comfort", "Design and experience"],
+        "dimension": "life",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel8",
+        "question": "Your travel budget style is…",
+        "options": ["Strictly controlled", "Save some, spend some", "Experience first", "Budget is not a big deal"],
+        "dimension": "life",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel9",
+        "question": "Your preferred transportation is…",
+        "options": ["Public transport", "Taxi / rideshare", "Rent and drive", "Walk / bike to explore"],
+        "dimension": "life",
+        "type": "complement",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel10",
+        "question": "In a new city, your first move is to…",
+        "options": ["Go to a landmark", "Find local food", "Rest at the hotel", "Wander around"],
+        "dimension": "fun",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel11",
+        "question": "When taking photos on a trip, you are…",
+        "options": ["Always taking photos (and helping others)", "Sometimes", "Not really into it", "Mostly the photographer for others"],
+        "dimension": "fun",
+        "type": "complement",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel12",
+        "question": "If something goes wrong (rain/delay), you…",
+        "options": ["Get irritated easily", "Solve it first", "Don’t really mind", "Treat it as part of the story"],
+        "dimension": "emotion",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel13",
+        "question": "Your favorite city type is…",
+        "options": ["Big city", "Old town", "Beach / island", "Nature / mountains"],
+        "dimension": "fun",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel14",
+        "question": "When eating during a trip, you tend to…",
+        "options": ["Must try local specialties", "Follow ratings and recommendations", "Whatever is convenient", "Prefer familiar foods"],
+        "dimension": "life",
+        "type": "complement",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel15",
+        "question": "Do you like shopping while traveling?",
+        "options": ["Love buying souvenirs", "Only buy useful things", "Rarely buy", "Depends on local specialties"],
+        "dimension": "life",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel16",
+        "question": "If you disagree, you usually…",
+        "options": ["Say my view directly", "Negotiate a compromise", "Try to accommodate", "Split up for a while"],
+        "dimension": "emotion",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel17",
+        "question": "Can you accept traveling separately for a bit?",
+        "options": ["No, never", "Sometimes", "Yes, each do our own thing", "Strongly support free schedules"],
+        "dimension": "emotion",
+        "type": "conflict",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel18",
+        "question": "After a trip, you most want to keep…",
+        "options": ["Lots of photos", "A relaxed experience", "Interesting stories", "A full checklist record"],
+        "dimension": "fun",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel19",
+        "question": "On trips, you’re best as the…",
+        "options": ["Itinerary planner", "Budget manager", "Mood coordinator", "Easygoing teammate"],
+        "dimension": "fun",
+        "type": "complement",
+        "scores": [0, 1, 2, 3]
+      },
+      {
+        "id": "travel20",
+        "question": "Your perfect travel buddy is someone who…",
+        "options": ["Has the same schedule", "Has the same budget", "Can accommodate each other", "Explores the unknown with me"],
+        "dimension": "emotion",
+        "type": "similarity",
+        "scores": [0, 1, 2, 3]
+      }
+    ]
+  }
+}

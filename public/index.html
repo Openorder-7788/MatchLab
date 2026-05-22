@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b1020" />
+    <title>MatchLab</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg"></div>
+    <div class="noise"></div>
+    <div class="bg-shapes"></div>
+
+    <div class="app" id="app">
+      <div class="shell">
+        <div class="topbar">
+          <div class="brandMark" role="button" tabindex="0" id="brandHome">
+            <div class="orb" aria-hidden="true"></div>
+            <div class="brandText">
+              <div class="appName">MatchLab</div>
+            </div>
+          </div>
+          <div id="userPill" class="userPill" style="display:none;">
+            <img id="userAvatar" class="userAvatar" src="" alt="" />
+            <span id="userDisplayName" class="userDisplayName"></span>
+            <button id="btnLogout" class="iconBtn" style="padding:4px 8px;font-size:12px;" aria-label="Logout">✕</button>
+          </div>
+        </div>
+
+        <section class="page active" id="pageLogin">
+          <div class="card">
+            <h1 class="title">MatchLab</h1>
+            <p class="slogan">Who Matches You Best?Let Me Show You.</p>
+            <div class="divider"></div>
+
+            <div id="loginTabs" class="loginTabs">
+              <button class="loginTab active" data-tab="code">Code Login</button>
+              <button class="loginTab" data-tab="password">Password Login</button>
+              <button class="loginTab" data-tab="wallet">🦊 Wallet</button>
+            </div>
+
+            <div id="loginPanelCode" class="loginPanel">
+              <div class="field">
+                <label for="loginEmail1">Email</label>
+                <input id="loginEmail1" type="email" placeholder="you@example.com" autocomplete="off" />
+              </div>
+              <div class="field">
+                <label for="loginCode">Verification code</label>
+                <div class="codeRow">
+                  <input id="loginCode" type="text" maxlength="6" placeholder="123456" autocomplete="off" />
+                  <button class="btn secondary" id="btnSendCode" style="width:auto;min-width:110px;padding:12px 10px;font-size:13px;">Send Code</button>
+                </div>
+              </div>
+              <div class="actions">
+                <button class="btn primary" id="btnLoginCode">Sign In</button>
+              </div>
+            </div>
+
+            <div id="loginPanelPassword" class="loginPanel" style="display:none;">
+              <div class="field">
+                <label for="loginEmail2">Email</label>
+                <input id="loginEmail2" type="email" placeholder="you@example.com" autocomplete="off" />
+              </div>
+              <div class="field">
+                <label for="loginPassword">Password</label>
+                <input id="loginPassword" type="password" placeholder="Your password" autocomplete="off" />
+              </div>
+              <div class="actions">
+                <button class="btn primary" id="btnLoginPassword">Sign In</button>
+              </div>
+            </div>
+
+            <div id="loginPanelRegister" class="loginPanel" style="display:none;">
+              <div style="text-align:center;padding:20px 0;">
+                <div style="font-size:48px;margin-bottom:12px;">🦊</div>
+                <div style="font-size:16px;font-weight:860;color:rgba(255,255,255,.90);margin-bottom:8px;">Connect MetaMask</div>
+                <div style="font-size:13px;color:rgba(255,255,255,.60);margin-bottom:20px;">Sign a message with your EVM wallet to login via DataDID</div>
+                <div id="walletStatus" style="font-size:12px;color:rgba(255,255,255,.50);margin-bottom:12px;min-height:18px;"></div>
+                <button class="btn primary" id="btnConnectWallet" style="width:100%;">Connect Wallet</button>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+            <div class="hint" style="text-align:center;">Powered by DataDID · Decentralized Identity</div>
+          </div>
+        </section>
+
+        <section class="page" id="pageHome">
+          <div class="card">
+            <h1 class="title">MatchLab</h1>
+            <div class="howto" aria-label="How it works">
+              <div class="step"><div class="num">1</div><div class="txt">Answer separately</div></div>
+              <div class="step"><div class="num">2</div><div class="txt">Get a match index</div></div>
+              <div class="step"><div class="num">3</div><div class="txt">Read your vibe analysis</div></div>
+              <div class="step"><div class="num">4</div><div class="txt">Generate a shareable poster</div></div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" id="btnCreate">Create a Match Room</button>
+              <button class="btn secondary" id="btnJoin">Join with Invite Code</button>
+              <button class="btn ghost" id="btnMyRooms">My Room</button>
+            </div>
+          </div>
+          <div class="footNote">Rooms & results are stored on your server</div>
+        </section>
+
+        <section class="page" id="pageMyRooms">
+          <div class="card">
+            <h2 class="title" style="font-size:22px;margin-bottom:8px;">My Room</h2>
+            <p class="slogan" style="margin-bottom:10px;">Created rooms and invited rooms on this device.</p>
+            <div class="divider"></div>
+            <div class="listBox">
+              <div>
+                <h3>Created</h3>
+                <div id="myRoomsCreated"></div>
+              </div>
+              <div>
+                <h3>Invited</h3>
+                <div id="myRoomsInvited"></div>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn secondary" id="btnRefreshMyRooms">Refresh</button>
+              <button class="btn ghost" id="btnBackHomeMyRooms">Back</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="pageCreate">
+          <div class="card">
+            <h2 class="title" style="font-size:22px;margin-bottom:8px;">Create your room</h2>
+            <p class="slogan" style="margin-bottom:10px;">Pick a theme and enter your nickname.</p>
+
+            <div class="field">
+              <label for="roomNameInput">Room name (optional)</label>
+              <input id="roomNameInput" maxlength="64" placeholder="e.g. Friday Night Match" autocomplete="off" />
+            </div>
+
+            <div class="field">
+              <label for="themeSelect">Test theme</label>
+              <select id="themeSelect">
+                <option value="soulmate">Soulmate Sync Test</option>
+                <option value="food">Food Buddy Test</option>
+                <option value="travel">Travel Buddy Test</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="nicknameInput">Your nickname</label>
+              <input id="nicknameInput" maxlength="16" placeholder="e.g. Nova" autocomplete="off" />
+            </div>
+
+            <div class="actions">
+              <button class="btn primary" id="btnStartQuiz">Start the quiz</button>
+              <button class="btn ghost" id="btnBackHome1">Back</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="pageQuiz">
+          <div class="card">
+            <div class="qTop">
+              <div class="qMeta">
+                <div class="count" id="quizCount">1 / 12</div>
+                <div class="room" id="quizRoom">Room: —</div>
+              </div>
+              <div class="pill" id="quizRolePill">You</div>
+            </div>
+            <div class="question" id="quizQuestion">—</div>
+            <div class="options" id="quizOptions"></div>
+            <div class="btnRow" style="margin-top:14px;">
+              <button class="btn ghost" id="btnPrev">Previous</button>
+              <button class="btn secondary" id="btnNext">Next question</button>
+            </div>
+            <div class="progressWrap" aria-label="Progress">
+              <div class="progressBar" id="progressBar"></div>
+            </div>
+            <div class="hint" style="margin-top:10px;">Pick an option, then tap "Next question". Use "Previous" to review and adjust.</div>
+          </div>
+        </section>
+
+        <section class="page" id="pageWait">
+          <div class="card">
+            <h2 class="title" style="font-size:22px;margin-bottom:8px;">Saved.</h2>
+            <p class="slogan" style="margin-bottom:10px;">Your answers are stored. Invite someone to answer too.</p>
+
+            <div class="card tight" style="background: rgba(0,0,0,.18);">
+              <div class="small">Invite code</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;">
+                <div style="font-size:18px;font-weight:920;letter-spacing:.6px;" id="inviteCodeText">MATCH-0000</div>
+                <div class="pill" id="inviteThemePill">Soulmate Sync</div>
+              </div>
+              <div class="hint" style="margin-top:8px;" id="inviteLinkText">Invite link: —</div>
+            </div>
+
+            <div class="actions">
+              <button class="btn primary" id="btnCopyLink">Copy invite link</button>
+              <button class="btn locked" id="btnCheckOutcomes">Check outcomes</button>
+              <button class="btn ghost" id="btnBackHome2">Back to Home</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="pageResult">
+          <div class="card">
+            <div class="resultHero">
+              <div class="pill" id="roomOverallPill" style="display:none;"></div>
+              <div class="participantSelector" id="participantSelector"></div>
+              <div class="names" id="resultNames"></div>
+              <div class="scoreRing">
+                <div class="badge" id="resultBadge">—</div>
+                <div class="scoreNum"><span id="resultScore">0</span><span style="font-size:18px;font-weight:880;opacity:.9;">%</span></div>
+                <div class="scoreSub" id="resultSub">—</div>
+                <p class="desc" id="resultDesc">—</p>
+              </div>
+            </div>
+
+            <div class="metrics" id="metrics"></div>
+
+            <div class="listBox">
+              <div>
+                <h3>⭐ Best sync</h3>
+                <ul id="listStrengths"></ul>
+              </div>
+              <div>
+                <h3>⚡ Friction</h3>
+                <ul id="listFrictions"></ul>
+              </div>
+            </div>
+
+            <div class="advice" id="adviceText">—</div>
+
+            <div class="actions">
+              <button class="btn primary" id="btnPoster">Generate share poster</button>
+              <button class="btn secondary" id="btnRetry">Try again</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="pagePoster">
+          <div class="posterWrap">
+            <div class="poster" id="posterCard" aria-label="Share poster">
+              <div>
+                <div class="posterTop">
+                  <div class="posterTitle">MatchLab</div>
+                  <div class="posterChip" id="posterTitleChip">Soulmate Sync</div>
+                </div>
+                <div class="posterMid">
+                  <div class="posterNames" id="posterNames"></div>
+                  <div class="posterScore">
+                    <div class="n" id="posterScore">0</div>
+                    <div class="p">Match Index</div>
+                  </div>
+                  <div class="badge" style="align-self:flex-start;" id="posterBadge">—</div>
+                  <div class="posterQuote" id="posterQuote">—</div>
+                </div>
+              </div>
+              <div class="posterBottom">
+                <div class="posterCTA">Scan to test your sync level with your person.</div>
+                <div class="qr" aria-label="Fake QR code placeholder"></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="actions" style="margin-top:0;">
+                <button class="btn primary" id="btnSavePoster">Save poster</button>
+                <button class="btn ghost" id="btnBackResult">Back to result</button>
+              </div>
+              <div class="hint" style="margin-top:10px;">Demo note: the poster is an HTML card (no real image export yet).</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <div class="modalOverlay" id="joinModal" aria-hidden="true">
+      <div class="sheet" role="dialog" aria-modal="true" aria-label="Join match room">
+        <div class="sheetTop">
+          <div class="sheetTitle">Join with invite code</div>
+          <button class="iconBtn" id="btnCloseJoin" aria-label="Close">✕</button>
+        </div>
+        <div class="field" style="margin-top:4px;">
+          <label for="joinCodeInput">Invite code</label>
+          <input id="joinCodeInput" placeholder="e.g. MATCH-8273" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="joinNicknameInput">Your nickname</label>
+          <input id="joinNicknameInput" maxlength="16" placeholder="e.g. Echo" autocomplete="off" />
+          <div class="hint">If the room is found, you'll answer the same 12 questions.</div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="btnConfirmJoin">Join & start</button>
+          <button class="btn ghost" id="btnCancelJoin">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
