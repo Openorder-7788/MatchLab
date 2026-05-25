@@ -58,8 +58,7 @@ async function loginWithEmailPassword(email, password) {
 }
 
 async function getEvmChallenge(address, chainId, origin) {
-  if (!origin) throw new Error("origin is required for EVM challenge");
-  const message = await dataClient.getEvmChallenge(address, chainId || 985, origin);
+  const message = await dataClient.getEvmChallenge(address, chainId || 985, origin || "http://localhost:8787");
   return message;
 }
 

@@ -89,8 +89,8 @@ async function handleEvmChallenge(pool, body) {
   const address = String(body?.address || "").trim();
   if (!address || !address.startsWith("0x") || address.length < 10) return { status: 400, data: { error: "invalid_address" } };
   const chainId = Number(body?.chainId) || 985;
-  const origin = String(body?.origin || "").trim();
-  if (!origin) return { status: 400, data: { error: "origin_required" } };
+  let origin = String(body?.origin || "").trim() || null;
+  if (origin) origin = origin.replace("://127.0.0.1:", "://localhost:");
   try {
     const message = await getEvmChallenge(address, chainId, origin);
     return { status: 200, data: { ok: true, message } };

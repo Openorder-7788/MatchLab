@@ -4,7 +4,6 @@ const path = require("path");
 const fs = require("fs");
 const Fastify = require("fastify");
 const fastifyStatic = require("@fastify/static");
-const fastifyCors = require("@fastify/cors");
 
 const { APP_PORT } = require("./config");
 const { openPool, migrate, seedQuestionsFromFile } = require("./db/pool");
@@ -28,13 +27,6 @@ async function main() {
 
   const app = Fastify({ logger: true });
   const hub = createSseHub();
-
-  app.register(fastifyCors, {
-    origin: true,
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Client-Id", "X-Session-Token"],
-    credentials: true
-  });
 
   const publicDir = path.join(__dirname, "public");
   app.register(fastifyStatic, {
