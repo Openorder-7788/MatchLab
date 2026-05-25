@@ -1166,20 +1166,22 @@ const App = (() => {
         el.walletStatus.textContent = "Requesting wallet access...";
         el.walletStatus.style.display = "block";
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        const address = accounts[0];
+        let address = accounts[0];
         const chainId = await window.ethereum.request({ method: "eth_chainId" });
         const chainIdNum = parseInt(chainId, 16) || 985;
+
         el.walletStatus.textContent = "Getting challenge from DataDID...";
-        const challenge = await apiEvmChallenge(address, chainIdNum);
-        el.walletStatus.textContent = "Please sign the message in MetaMask...";
-        const signature = await window.ethereum.request({
-          method: "personal_sign",
-          params: [challenge.message, address]
-        });
-        el.walletStatus.textContent = "Verifying with DataDID...";
-        const data = await apiLoginWithEvm(challenge.message, signature);
-        if (data.ok) handleLoginSuccess(data);
-        else showToast(data.error || "Wallet login failed.");
+        let challenge = await apiEvmChallenge(address, chainIdNum);
+
+        const siweAddress = extractAddressFromSiwe(challenge.message);
+        if (siweAddress && siweAddress.toLowerCase() === address.toLowerCase() && siweAddress !== address) {
+          address = siweAddress;
+          el.walletStatus.textContent = "Re-syncing address format...";
+          challenge = await apiEvmChallenge(address, chainIdNum);
+        }
+
+        const loginResult = await performEvmSignAndLogin(address, challenge.message, chainIdNum);
+        if (loginResult) handleLoginSuccess(loginResult);
       } catch (e) {
         if (e.code === 4001) {
           showToast("Wallet connection rejected.");
@@ -1191,6 +1193,35 @@ const App = (() => {
         el.btnConnectWallet.disabled = false;
       }
     });
+
+    async function performEvmSignAndLogin(address, message, chainIdNum, isRetry) {
+      el.walletStatus.textContent = "Please sign the message in MetaMask...";
+      const signature = await window.ethereum.request({
+        method: "personal_sign",
+        params: [message, address]
+      });
+      el.walletStatus.textContent = "Verifying with DataDID...";
+      try {
+        const data = await apiLoginWithEvm(message, signature);
+        if (data.ok) return data;
+        showToast(data.error || "Wallet login failed.");
+        return null;
+      } catch (e) {
+        const errBody = e?.body;
+        const isNonceExpired = errBody?.message && /1014|login.failed|expired/i.test(errBody.message);
+        if (isNonceExpired && !isRetry) {
+          el.walletStatus.textContent = "Session expired, retrying...";
+          const newChallenge = await apiEvmChallenge(address, chainIdNum);
+          return performEvmSignAndLogin(address, newChallenge.message, chainIdNum, true);
+        }
+        throw e;
+      }
+    }
+
+    function extractAddressFromSiwe(message) {
+      const match = message.match(/0x[0-9a-fA-F]{40}/);
+      return match ? match[0] : null;
+    }
 
     el.btnCreate.addEventListener("click", () => {
       closeSse();
