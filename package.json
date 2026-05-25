@@ -8,6 +8,7 @@
     "dev": "node server.js"
   },
   "dependencies": {
+    "@fastify/cors": "^8.5.0",
     "@fastify/static": "^7.0.4",
     "datadid-sdk-js": "^1.0.7",
     "dotenv": "^16.6.0",

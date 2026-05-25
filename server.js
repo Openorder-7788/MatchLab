@@ -4,6 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const Fastify = require("fastify");
 const fastifyStatic = require("@fastify/static");
+const fastifyCors = require("@fastify/cors");
 
 const { APP_PORT } = require("./config");
 const { openPool, migrate, seedQuestionsFromFile } = require("./db/pool");
@@ -12,6 +13,7 @@ const { registerMiscRoutes } = require("./routes/misc.routes");
 const { registerRoomRoutes } = require("./routes/room.routes");
 const { registerShareRoutes } = require("./routes/share.routes");
 const { registerAuthRoutes } = require("./routes/auth.routes");
+const { registerTestRoutes } = require("./routes/test");
 
 const QUESTION_BANK_FILE = process.env.QUESTION_BANK_FILE || path.join(__dirname, "question-bank.json");
 
@@ -26,6 +28,13 @@ async function main() {
 
   const app = Fastify({ logger: true });
   const hub = createSseHub();
+
+  app.register(fastifyCors, {
+    origin: true,
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Client-Id", "X-Session-Token"],
+    credentials: true
+  });
 
   const publicDir = path.join(__dirname, "public");
   app.register(fastifyStatic, {
@@ -43,6 +52,7 @@ async function main() {
   registerRoomRoutes(app, pool, hub, THEMES);
   registerShareRoutes(app, pool);
   registerAuthRoutes(app, pool);
+  registerTestRoutes(app);
 
   await app.listen({ port: APP_PORT, host: "0.0.0.0" });
   console.log(`Server running at http://localhost:${APP_PORT}`);
