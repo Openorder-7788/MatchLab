@@ -121,44 +121,6 @@ async function handleLoginWithEvm(pool, body) {
   }
 }
 
-async function handleVerifyAccessToken(pool, body) {
-  const accessToken = String(body?.accessToken || body?.token || "").trim();
-  if (!accessToken) return { status: 400, data: { error: "missing_access_token" } };
-
-  try {
-    const profile = await verifyAccessToken(accessToken);
-    if (!profile || !profile.uid) {
-      return { status: 401, data: { error: "invalid_access_token" } };
-    }
-
-    const user = await findOrCreateUser(pool, {
-      ...profile,
-      accessToken,
-      refreshToken: null
-    });
-
-    if (!user) return { status: 500, data: { error: "user_create_failed" } };
-
-    return {
-      status: 200,
-      data: {
-        ok: true,
-        sessionToken: makeSessionToken(user.id),
-        user: {
-          id: user.id,
-          email: user.email,
-          username: user.username,
-          avatarUrl: user.avatar_url,
-          did: user.did,
-          walletAddress: user.wallet_address
-        }
-      }
-    };
-  } catch (e) {
-    return { status: 401, data: { error: "invalid_access_token", message: e.message } };
-  }
-}
-
 async function handleGetMe(pool, userId) {
   const user = await getUserById(pool, userId);
   if (!user) return { status: 404, data: { error: "user_not_found" } };
@@ -183,6 +145,5 @@ module.exports = {
   handleLoginWithPassword,
   handleEvmChallenge,
   handleLoginWithEvm,
-  handleVerifyAccessToken,
   handleGetMe
 };

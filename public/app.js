@@ -4,9 +4,6 @@ const App = (() => {
   const STORAGE_TOKENS = "sm_tokens_v2";
   const STORAGE_ROOM_META = "sm_room_meta_v1";
   const STORAGE_SESSION = "sm_session_v1";
-  const STORAGE_DATADID_TOKEN = "sm_datadid_access_token";
-  const STORAGE_DATADID_LANG = "sm_datadid_lang";
-  const DATADID_LANGUAGES = ["en", "zh", "zh-TW", "ja", "ko", "fr", "es", "ru", "ar"];
 
   const DIMENSIONS = {
     life: { key: "life", label: "Lifestyle Sync", icon: "🏠" },
@@ -210,47 +207,8 @@ const App = (() => {
 
   function clearSession() {
     localStorage.removeItem(STORAGE_SESSION);
-    localStorage.removeItem(STORAGE_DATADID_TOKEN);
-    localStorage.removeItem(STORAGE_DATADID_LANG);
     state.sessionToken = "";
     state.currentUser = null;
-  }
-
-  function normalizeDataDIDLanguage(value) {
-    const raw = String(value || "").trim().toLowerCase();
-    if (!raw) return null;
-    const map = {
-      "zh-cn": "zh",
-      "zh-sg": "zh",
-      "zh-hans": "zh",
-      "zh-hk": "zh-TW",
-      "zh-mo": "zh-TW",
-      "zh-tw": "zh-TW",
-      "zh-hant": "zh-TW"
-    };
-    const normalized = map[raw] || raw;
-    return DATADID_LANGUAGES.includes(normalized) ? normalized : null;
-  }
-
-  function consumeAppListRedirect() {
-    if (typeof window === "undefined") return { token: null, language: null, consumed: false };
-
-    const url = new URL(window.location.href);
-    const token = String(url.searchParams.get("token") || "").trim();
-    const languageParam = String(url.searchParams.get("lang") || "").trim();
-    const language = normalizeDataDIDLanguage(languageParam);
-
-    if (token) localStorage.setItem(STORAGE_DATADID_TOKEN, token);
-    if (language) localStorage.setItem(STORAGE_DATADID_LANG, language);
-
-    if (token || languageParam) {
-      url.searchParams.delete("token");
-      url.searchParams.delete("lang");
-      window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
-      return { token, language, consumed: true };
-    }
-
-    return { token: null, language: null, consumed: false };
   }
 
   function loadTokenStore() {
@@ -408,14 +366,6 @@ const App = (() => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message, signature })
-    });
-  }
-
-  async function apiVerifyDataDIDToken(token) {
-    return fetchJson("/api/auth/verify-token", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ accessToken: token })
     });
   }
 
@@ -1096,26 +1046,6 @@ const App = (() => {
     }, 1000);
   }
 
-  async function tryHandleAppListRedirect() {
-    const redirect = consumeAppListRedirect();
-    const token = redirect.token || localStorage.getItem(STORAGE_DATADID_TOKEN) || "";
-    if (!redirect.consumed && !token) return false;
-
-    try {
-      const data = await apiVerifyDataDIDToken(token);
-      if (!data?.ok || !data?.sessionToken) {
-        throw new Error("invalid_redirect_session");
-      }
-      handleLoginSuccess(data);
-      return true;
-    } catch (e) {
-      clearSession();
-      goto("Login");
-      showToast("Could not verify the AppList session. Please log in again.");
-      return false;
-    }
-  }
-
   async function tryRestoreSession() {
     const saved = loadSession();
     if (!saved || !saved.sessionToken) {
@@ -1442,10 +1372,7 @@ const App = (() => {
 
   async function init() {
     bindEvents();
-    const handledRedirect = await tryHandleAppListRedirect();
-    if (!handledRedirect) {
-      await tryRestoreSession();
-    }
+    await tryRestoreSession();
     bootFromUrl();
   }
 
