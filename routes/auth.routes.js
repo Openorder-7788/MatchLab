@@ -1,4 +1,4 @@
-const { handleSendCode, handleLoginWithEmail, handleRegister, handleLoginWithPassword, handleEvmChallenge, handleLoginWithEvm, handleGetMe } = require("../controllers/auth.controller");
+const { handleSendCode, handleLoginWithEmail, handleRegister, handleLoginWithPassword, handleLoginWithAppList, handleEvmChallenge, handleLoginWithEvm, handleGetMe } = require("../controllers/auth.controller");
 
 function registerAuthRoutes(app, pool) {
   app.post("/api/auth/send-code", async (req, reply) => {
@@ -18,6 +18,11 @@ function registerAuthRoutes(app, pool) {
 
   app.post("/api/auth/login/password", async (req, reply) => {
     const result = await handleLoginWithPassword(pool, req.body);
+    return reply.code(result.status).send(result.data);
+  });
+
+  app.post("/api/auth/login/applist", async (req, reply) => {
+    const result = await handleLoginWithAppList(pool, req.body);
     return reply.code(result.status).send(result.data);
   });
 

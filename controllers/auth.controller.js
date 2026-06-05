@@ -85,6 +85,28 @@ async function handleLoginWithPassword(pool, body) {
   }
 }
 
+async function handleLoginWithAppList(pool, body) {
+  const accessToken = String(body?.token || "").trim();
+  if (!accessToken) return { status: 400, data: { error: "missing_token" } };
+  try {
+    const profile = await verifyAccessToken(accessToken);
+    if (!profile) return { status: 401, data: { error: "invalid_token" } };
+    const user = await findOrCreateUser(pool, { ...profile, accessToken, refreshToken: null });
+    if (!user) return { status: 500, data: { error: "user_create_failed" } };
+    const sessionToken = makeSessionToken(user.id);
+    return {
+      status: 200,
+      data: {
+        ok: true,
+        sessionToken,
+        user: { id: user.id, email: user.email, username: user.username, avatarUrl: user.avatar_url, did: user.did, walletAddress: user.wallet_address }
+      }
+    };
+  } catch {
+    return { status: 502, data: { error: "applist_login_failed" } };
+  }
+}
+
 async function handleEvmChallenge(pool, body) {
   const address = String(body?.address || "").trim();
   if (!address || !address.startsWith("0x") || address.length < 10) return { status: 400, data: { error: "invalid_address" } };
@@ -143,6 +165,7 @@ module.exports = {
   handleLoginWithEmail,
   handleRegister,
   handleLoginWithPassword,
+  handleLoginWithAppList,
   handleEvmChallenge,
   handleLoginWithEvm,
   handleGetMe

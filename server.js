@@ -25,7 +25,14 @@ async function main() {
   await migrate(pool);
   await seedQuestionsFromFile(pool, QUESTION_BANK_FILE);
 
-  const app = Fastify({ logger: true });
+  const app = Fastify({
+    logger: {
+      redact: {
+        paths: ["req.url", "req.query.token", "req.query.lang"],
+        censor: "[redacted]"
+      }
+    }
+  });
   const hub = createSseHub();
 
   const publicDir = path.join(__dirname, "public");

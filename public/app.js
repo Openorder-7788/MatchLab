@@ -4,6 +4,8 @@ const App = (() => {
   const STORAGE_TOKENS = "sm_tokens_v2";
   const STORAGE_ROOM_META = "sm_room_meta_v1";
   const STORAGE_SESSION = "sm_session_v1";
+  const DATADID_LANGUAGES = ["en", "zh", "zh-TW", "ja", "ko", "fr", "es", "ru", "ar"];
+  const APP_SUPPORTED_LANGUAGES = ["en"];
 
   const DIMENSIONS = {
     life: { key: "life", label: "Lifestyle Sync", icon: "🏠" },
@@ -173,6 +175,48 @@ const App = (() => {
     const s = String(name || "").trim();
     if (!s) return "";
     return s.length > 16 ? s.slice(0, 16) : s;
+  }
+
+  function normalizeDataDidLanguage(value) {
+    const raw = String(value || "").trim();
+    if (!raw) return null;
+    const lower = raw.toLowerCase();
+    const dataDidLanguage =
+      lower === "zh-tw" || lower === "zh-hant" || lower === "zh-hk"
+        ? "zh-TW"
+        : lower === "zh-cn" || lower === "zh-hans"
+          ? "zh"
+          : DATADID_LANGUAGES.find((language) => language.toLowerCase() === lower) || null;
+    if (!dataDidLanguage) return null;
+    return APP_SUPPORTED_LANGUAGES.includes(dataDidLanguage) ? dataDidLanguage : null;
+  }
+
+  function applyAppListLanguage(value) {
+    const language = normalizeDataDidLanguage(value);
+    if (!language) return null;
+    document.documentElement.setAttribute("lang", language);
+    return language;
+  }
+
+  function consumeAppListRedirectParams() {
+    const url = new URL(window.location.href);
+    const tokenParam = url.searchParams.get("token");
+    const langParam = url.searchParams.get("lang");
+    const accessToken = String(tokenParam || "").trim();
+    const language = applyAppListLanguage(langParam);
+
+    if (tokenParam !== null || langParam !== null) {
+      url.searchParams.delete("token");
+      url.searchParams.delete("lang");
+      window.history.replaceState(window.history.state, document.title, `${url.pathname}${url.search}${url.hash}`);
+    }
+
+    return {
+      accessToken,
+      language,
+      consumedToken: Boolean(accessToken),
+      consumedParams: tokenParam !== null || langParam !== null
+    };
   }
 
   function goto(page) {
@@ -345,6 +389,14 @@ const App = (() => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
+    });
+  }
+
+  async function apiLoginWithAppListToken(token) {
+    return fetchJson("/api/auth/login/applist", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token })
     });
   }
 
@@ -1067,6 +1119,33 @@ const App = (() => {
     }
   }
 
+  async function tryAppListRedirectLogin() {
+    const redirect = consumeAppListRedirectParams();
+    if (!redirect.consumedToken) return redirect;
+
+    clearSession();
+    updateUserPill();
+    try {
+      const data = await apiLoginWithAppListToken(redirect.accessToken);
+      if (data?.ok) {
+        handleLoginSuccess(data);
+        return { ...redirect, loggedIn: true };
+      }
+    } catch (e) {
+      clearSession();
+      updateUserPill();
+      goto("Login");
+      showToast(e?.status === 401 ? "AppList session expired. Please sign in again." : "AppList login failed.");
+      return { ...redirect, loggedIn: false };
+    }
+
+    clearSession();
+    updateUserPill();
+    goto("Login");
+    showToast("AppList login failed.");
+    return { ...redirect, loggedIn: false };
+  }
+
   async function copyText(text) {
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1372,7 +1451,8 @@ const App = (() => {
 
   async function init() {
     bindEvents();
-    await tryRestoreSession();
+    const appList = await tryAppListRedirectLogin();
+    if (!appList.consumedToken) await tryRestoreSession();
     bootFromUrl();
   }
 

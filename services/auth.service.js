@@ -1,6 +1,7 @@
 const { randomUUID } = require("crypto");
 const { DataClient } = require("datadid-sdk-js");
 
+const DATADID_PRODUCTION_DATA_URL = "https://data-api.memolabs.net";
 const dataClient = DataClient.production();
 
 async function sendEmailCode(email) {
@@ -82,13 +83,13 @@ async function loginWithEvm(message, signature) {
 
 async function verifyAccessToken(accessToken) {
   const tempClient = new DataClient({
-    baseURL: "https://data-api.memolabs.net",
+    baseURL: DATADID_PRODUCTION_DATA_URL,
     disableAutoToken: true
   });
   tempClient.setAccessToken(accessToken);
   try {
     const me = await tempClient.getMe();
-    const userInfo = await tempClient.getUserInfo();
+    const userInfo = await tempClient.getUserInfo().catch(() => ({}));
     return {
       uid: me.uid,
       email: me.email || null,
